@@ -1,0 +1,67 @@
+<template>
+  <div class="check-oreder">
+    <my-dialog :is-show="isShowCheckDialog"
+    @on-close="checkStatus">
+      请检查你的支付状态！
+      <div class="button" @click="checkStatus">
+        支付成功
+      </div>
+      <div class="button" @click="checkStatus">
+        支付失败
+      </div>
+    </my-dialog>
+
+    <my-dialog :is-show="isShowSuccessDialog" @on-close="toOrderList">
+      购买成功
+    </my-dialog>
+    <my-dialog :is-show="isShowFailDialog" @on-close="toOrderList">
+      购买失败
+    </my-dialog>
+  </div>
+</template>
+
+<script>
+  import MyDialog from './Dialog.vue'
+  export default {
+    name:'check-oreder',
+    components:{MyDialog},
+    props:{
+      isShowCheckDialog:{
+        type:Boolean,
+        default:false
+      },
+      orderId: {
+        type: [String, Number]
+      }
+    },
+    methods:{
+      checkStatus () {
+        this.$http.post('/api/checkOrder', {
+          orderId: this.orderId
+        })
+          .then((res) => {
+            this.isShowSuccessDialog = true
+            this.isShowFailDialog = false
+            this.$emit('on-close-check-dialog')
+          }, (err) => {
+            this.isShowSuccessDialog = false
+            this.isShowFailDialog = true
+            this.$emit('on-close-check-dialog')
+          })
+      },
+      toOrderList(){
+          this.$router.push({path:'/orderList'});
+      }
+    },
+    data () {
+      return {
+        isShowSuccessDialog:false,
+        isShowFailDialog:false
+      }
+    }
+  }
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+</style>

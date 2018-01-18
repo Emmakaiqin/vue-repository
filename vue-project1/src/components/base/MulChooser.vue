@@ -9,7 +9,6 @@
       >{{ item.label }}</li>
     </ul>
   </div>
-  </div>
 </template>
 
 <script>

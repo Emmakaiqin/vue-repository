@@ -81,7 +81,7 @@
           {
             src: require('../../assets/slideShow/pic4.jpg'),
             title: 'xxx4',
-            href: 'detail/product'
+            href: 'detail/publish'
           }
         ],
         boardList: [

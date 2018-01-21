@@ -10,7 +10,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable:{//配置json-server请求路径
+    proxyTable:{//配置json-server请求路径 解决跨域问题
       '/api/':'http://127.0.0.1:3000/'
     },
 

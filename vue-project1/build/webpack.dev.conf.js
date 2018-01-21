@@ -112,8 +112,8 @@ jsonApiServer.listen(3000, () => {
 //交互方法二：express设置实现模拟远程接口实现ajax交互
 const apiServer = express()    //名称apiServer根据项目自定义，避免冲突为原则
 const bodyParser = require('body-parser')  //express必须要进行的配置
-apiServer.use(bodyParser.urlencoded({ extended: true }))  //
-apiServer.use(bodyParser.json())
+apiServer.use(bodyParser.urlencoded({ extended: true }))  //插件
+apiServer.use(bodyParser.json())//设置数据格式为json
 const apiRouter = express.Router()  //配置路由，名称同样可以自拟
 const fs = require('fs')
 apiRouter.route('/:apiName')    //apiName为接口名称

@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/vue-project2/vue-project2/node_modules" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/vue-project1/node_modules" />
+    <content url="file://$MODULE_DIR$/vue-project2/node_modules" />
     <content url="file://$MODULE_DIR$/vue-project2/vue-project2/node_modules" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -12,10 +12,10 @@ function resolve (dir) {
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: {
+  entry: {//webpack编译入口配置
     app: './src/main.js'
   },
-  output: {
+  output: {//webpack编译出口配置
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
@@ -23,8 +23,8 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
-    alias: {
+    extensions: ['.js', '.vue', '.json'],//自动补全文件后缀
+    alias: {//别名 require是使用别名
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
     }

@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const express = require('express')//引入express模拟从后台接口获取数据
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -92,4 +93,32 @@ module.exports = new Promise((resolve, reject) => {
       resolve(devWebpackConfig)
     }
   })
+})
+
+//交互方法二：express设置实现模拟远程接口实现ajax交互
+const apiServer = express()    //名称apiServer根据项目自定义，避免冲突为原则
+const bodyParser = require('body-parser')  //express必须要进行的配置
+apiServer.use(bodyParser.urlencoded({ extended: true }))  //
+apiServer.use(bodyParser.json())
+const apiRouter = express.Router()  //配置路由，名称同样可以自拟
+const fs = require('fs')
+apiRouter.route('/:apiName')    //apiName为接口名称
+  .all(function (req, res) {    // .all即支持包括get\post在内的所有xhr请求
+    fs.readFile('./data.json', 'utf8', function (err, data) {   //db.json 自己配置的模拟数据需要放置到
+      if (err) throw err
+      var data = JSON.parse(data)   //将从服务器端获取到的json对象转换为普通js对象
+      if (data[req.params.apiName]) {
+        res.json(data[req.params.apiName])
+      }
+      else {
+        res.send('no such api name')
+      }
+    })
+  })
+apiServer.use('/api', apiRouter);   //   配置 '/api'是因为做了服务器代理，所有要指明代理地址
+apiServer.listen(3001, function (err) {  //配置接口端口号，为了方便查看，一般取前端口号+1
+  if (err) {
+    console.log(err)
+    return
+  }
 })

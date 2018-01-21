@@ -1,10 +1,10 @@
 <template>
-  <div></div>
+  <div class="footer">底部</div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'VFooter',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

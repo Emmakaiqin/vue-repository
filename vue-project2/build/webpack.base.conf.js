@@ -24,9 +24,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],//自动补全文件后缀
-    alias: {//别名 require是使用别名
+    alias: {//别名 require、import时使用别名
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'components':path.resolve(__dirname,'../src/components')//设置components路径别名
     }
   },
   module: {

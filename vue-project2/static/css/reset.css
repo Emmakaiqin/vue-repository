@@ -29,8 +29,8 @@ footer, header, menu, nav, section {
     display: block;
 }
 
-body {
-    line-height: 1;
+html,body {//父元素字体样式行高家族设置
+    line-height: 1;font-weight:200;font-family: 'PingFang SC','STHeitisc-Light','Helvetica-Light',Arial,sans-serif;
 }
 
 blockquote, q {

@@ -50,9 +50,21 @@
     display:inline-block;width:30px;height:18px;background-image: url("./brand@2x.png");
     background-size:30px 18px;background-repeat:no-repeat;vertical-align:top;
   }
-  @media (min-device-pixel-ratio:3){
-    .header .content-wrapper .content .title .brand{background-image: url("./brand@3x.png");}
-  }
   .header .content-wrapper .content .title .name{margin-left:6px;font-size:16px;line-height: 18px;font-weight:bold;}
   .header .content-wrapper .content .description{margin-bottom:10px;font-size:12px;line-height:12px;}
+  .header .content-wrapper .content .support{}
+  .header .content-wrapper .content .support .icon{display:inline-block;width:12px;height:12px;margin-right:4px;background-size:12px;background-repeat:no-repeat}
+  .header .content-wrapper .content .support .decrease{background-image: url("./decrease_1@2x.png");}
+  .header .content-wrapper .content .support .discount{background-image: url("./discount_1@2x.png");}
+  .header .content-wrapper .content .support .guarantee{background-image: url("./guarantee_1@2x.png");}
+  .header .content-wrapper .content .support .invoice{background-image: url("./invoice_1@2x.png");}
+  .header .content-wrapper .content .support .special{background-image: url("./special_1@2x.png");}
+  @media (min-device-pixel-ratio:3){
+    .header .content-wrapper .content .title .brand{background-image: url("./brand@3x.png");}
+    .header .content-wrapper .content .support .decrease{background-image: url("./decrease_1@3x.png");}
+    .header .content-wrapper .content .support .discount{background-image: url("./discount_1@3x.png");}
+    .header .content-wrapper .content .support .guarantee{background-image: url("./guarantee_1@3x.png");}
+    .header .content-wrapper .content .support .invoice{background-image: url("./invoice_1@3x.png");}
+    .header .content-wrapper .content .support .special{background-image: url("./special_1@3x.png");}
+  }
 </style>

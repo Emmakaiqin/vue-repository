@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'//ajax请求
 
+import './common/css/font-awesome.min.css'
+
 Vue.config.productionTip = false
 
 Vue.use(VueResource);

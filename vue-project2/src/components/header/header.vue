@@ -33,7 +33,8 @@
     </div>
     <!--背景 end-->
     <!--浮动层-->
-    <div v-show="detailShow" class="detail">
+    <transition name="cover">
+      <div v-show="detailShow" class="detail">
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
           <!--标题-->
@@ -56,6 +57,15 @@
               <span class="text">{{sellerMsg.supports[index].description}}</span>
             </li>
           </ul>
+
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">商家公告</div>
+            <div class="line"></div>
+          </div>
+          <div class="bulletin">
+            <p class="content">{{sellerMsg.bulletin}}</p>
+          </div>
           <!--文字 end-->
         </div>
       </div>
@@ -63,6 +73,7 @@
         <i class="fa fa-times"></i>
       </div>
     </div>
+    </transition>
     <!--浮动层 end-->
   </div>
 </template>
@@ -132,12 +143,18 @@
   .header .detail{position:fixed;z-index:100;width:100%;
     height:100%;overflow:auto;background-color:rgba(7,17,27,0.8);top:0;left:0;}
   .header .detail .detail-wrapper{min-height:100%;width:100%;}
+  /*-动画效果-*/
+  .header .cover-enter-active,.header .cover-leave-active {transition:all .5s;transform:rotate(45deg);}
+  .header .cover-enter,.header .cover-leave-to{transform:rotate(-45deg);}
+  /*-动画效果 end-*/
   .header .detail .detail-wrapper .detail-main{margin-top:64px;padding-bottom:64px;}
   .header .detail .detail-wrapper .detail-main .name{line-height:16px;font-size:16px;text-align:center;font-weight:700;}
   .header .detail .detail-wrapper .detail-main .star-wrapper{margin-top:18px;text-align:center;padding:2px 0;}
   .header .detail .detail-wrapper .detail-main .title{display:flex;width:80%;margin:28px auto 24px auto;}
   .header .detail .detail-wrapper .detail-main .title .line{flex:1;position:relative;top:-8px;border-bottom:1px solid rgba(255,255,255,0.2);}
   .header .detail .detail-wrapper .detail-main .title .text{padding:0 12px;font-size:14px;font-weight:700;}
+  .header .detail .detail-wrapper .detail-main .bulletin{width:80%;margin:0 auto;}
+  .header .detail .detail-wrapper .detail-main .bulletin .content{font-size:12px;text-align: justify;padding:0 12px;line-height:24px;}
   .header .detail .detail-wrapper .detail-main .supports{width:80%;margin:0 auto;}
   .header .detail .detail-wrapper .detail-main .support-item{padding:0 12px;margin-bottom:12px;font-szie:0;line-height:16px;}
   .header .detail .detail-wrapper .detail-main .support-item:last-child{margin-bottom:0;}

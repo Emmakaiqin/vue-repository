@@ -25,32 +25,42 @@
                   <div class="price">
                     <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                   </div>
+                  <div class="cartcontrol-wrapper">
+                    <cartcontrol :food="food"  v-on:cart-add="cartAdd"></cartcontrol>
+                  </div>
                 </div>
               </li>
             </ul>
           </li>
         </ul>
       </div>
+      <shopcart ref="shopcart" :select-foods="selecteFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
     </div>
 </template>
 
 <script>
   import BScroll from 'better-scroll';//引入滑动插件
+  import shopcart from '../shopcart/shopcart'
+  import cartcontrol from '../cartcontrol/cartcontrol'
     export default {
+      components:{
+        shopcart,
+        cartcontrol
+      },
       props:{
-          seller:{
-            type:Object
-          }
+        seller:{
+          type:Object
+        }
       },
       data(){
         return{
-          goods:[],
+          goods:[],//食物列表
           listHeight:[],//食品菜单区间高度
           scrollY:0
         }
       },
       computed:{
-        currentIndex(){
+        currentIndex(){//菜单索引
           for(let i=0;i<this.listHeight.length;i++){
             let height1=this.listHeight[i];
             let height2=this.listHeight[i+1];
@@ -58,12 +68,28 @@
               return i;
             }
           }
+        },
+        selecteFoods(){//选中的食物
+          let foods=[];
+          this.goods.forEach((good)=>{
+            good.foods.forEach((food)=>{
+              if(food.count){
+                foods.push(food);
+              }
+            })
+            })
+          return foods;
         }
       },
       methods:{
+        cartAdd(el){//添加物品到购物车动画
+          this.$nextTick(()=>{
+            this.$refs['shopcart'].drop(el);//父组件调用子组件的drop方法传参el
+          })
+        },
         _initScroll(){//上下拉滚动
           this.menuScroll=new BScroll(this.$refs.menuWrapper,{click:true});
-          this.foodsScroll=new BScroll(this.$refs.foodWrapper,{probeType:3});
+          this.foodsScroll=new BScroll(this.$refs.foodWrapper,{click:true,probeType:3});
           this.foodsScroll.on("scroll",(pos)=>{
             this.scrollY=Math.abs(Math.round(pos.y));
           })
@@ -96,9 +122,12 @@
          this.$nextTick(()=>{//在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
             this._initScroll();
             this._calculateHeight();
+            console.group(1);
+            console.log(this.goods);
           });
          },
           (err)=>{console.log(err);})
+
       }
     }
 </script>
@@ -124,7 +153,7 @@
     rgba(7,17,27,0.1);padding-bottom:18px;}
   .goods .foods-wrapper .food-item:last-child{border:none;margin-bottom:0;}
   .goods .foods-wrapper .food-item .icon{flex:0 0 57px;margin-right:10px;}
-  .goods .foods-wrapper .food-item .content{flex:1;}
+  .goods .foods-wrapper .food-item .content{flex:1;position:relative;}
   .goods .foods-wrapper .food-item .content .name{font-size:14px;margin:2px 0 8px 0;line-height:14px;height:14px;color:rgb(7,17,27);}
   .goods .foods-wrapper .food-item .content .desc,  .goods .foods-wrapper .food-item .content .extra{line-height:10px;font-size:10px;color:rgb(147,153,159);}
   .goods .foods-wrapper .food-item .content .desc{margin-bottom:8px;line-height:12px;}
@@ -132,4 +161,7 @@
   .goods .foods-wrapper .food-item .content .price{line-height:24px;font-weight:700;}
   .goods .foods-wrapper .food-item .content .price .now{margin-right:8px;font-size:14px;color:rgb(240,20,20);}
   .goods .foods-wrapper .food-item .content .price .old{font-size:10px;color:rgb(147,153,159);text-decoration:line-through;}
+  .goods .foods-wrapper .food-item .content .cartcontrol-wrapper{
+    position:absolute;right:0;bottom:-6px;
+  }
 </style>

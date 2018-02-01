@@ -14,7 +14,7 @@
           <li v-for="(item,index) in goods" class="food-list food-list-hook">
             <h1 class="title">{{item.name}}</h1>
             <ul>
-              <li v-for="food in item.foods" class="food-item">
+              <li @click="selectedFood(food,$event)" v-for="food in item.foods" class="food-item">
                 <div class="icon">
                   <img :src="food.image" width="57px" height="57px">
                 </div>
@@ -35,6 +35,7 @@
         </ul>
       </div>
       <shopcart ref="shopcart" :select-foods="selecteFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+      <food :food="selectedFoods" ref="selectFoodShow"></food>
     </div>
 </template>
 
@@ -42,10 +43,12 @@
   import BScroll from 'better-scroll';//引入滑动插件
   import shopcart from '../shopcart/shopcart'
   import cartcontrol from '../cartcontrol/cartcontrol'
+  import food from '../food/food'
     export default {
       components:{
         shopcart,
-        cartcontrol
+        cartcontrol,
+        food
       },
       props:{
         seller:{
@@ -56,7 +59,8 @@
         return{
           goods:[],//食物列表
           listHeight:[],//食品菜单区间高度
-          scrollY:0
+          scrollY:0,
+          selectedFoods:{}
         }
       },
       computed:{
@@ -111,7 +115,16 @@
           let foodList=this.$refs.foodWrapper.getElementsByClassName('food-list-hook');
           let el=foodList[index];
           this.foodsScroll.scrollToElement(el,300);
-        }
+        },
+        selectedFood(food,event){//查看物品详情
+          if(!event._constructed){//禁止点击一次出发两次点击事件
+            return ;
+          }
+          this.selectedFoods=food;
+          this.$nextTick(()=>{
+            this.$refs['selectFoodShow'].show(true);//父组件调用子组件的drop方法传参el
+          })
+        },
       },
       created(){
         this.classMap=['decrease','discount','guarantee','invoice','special']
@@ -122,8 +135,6 @@
          this.$nextTick(()=>{//在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
             this._initScroll();
             this._calculateHeight();
-            console.group(1);
-            console.log(this.goods);
           });
          },
           (err)=>{console.log(err);})
